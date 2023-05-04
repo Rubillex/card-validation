@@ -2,7 +2,7 @@
   <div class="card__wrapper">
     <div class="card" @click="openProductPage(product.id)" v-for="product in allProducts" :key="product.id">
       <img class="card__image untouchable" :src="product.image" alt="image"/>
-      <span v-html="product.name"/>
+      <span class="card__product" v-html="product.name"/>
       <span class="card__price" v-html="convertPrice(product.price) + ' ₽'"/>
     </div>
   </div>
@@ -36,29 +36,43 @@ const openProductPage = (id: number) => {
 
 
 .card {
-  padding: 12px;
+  padding: 20px;
   width: 100%;
   height: 100%;
-  background: #fff;
-  border-radius: 8px;
+  background: rgba(113, 110, 116, 0.22);
+  border-radius: 16px;
+  backdrop-filter: blur(4.6px);
+  -webkit-backdrop-filter: blur(4.6px);
+  border: 1px solid rgba(232, 226, 226, 0.12);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   position: relative;
   cursor: pointer;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  transition: all 0.4s ease;
+
+  -webkit-animation: shadow-drop-2-center-out 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: shadow-drop-2-center-out 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
+  &__product {
+    padding-top: 20px;
+    font-size: 15px;
+    font-weight: 600;
+  }
 
   &__price {
-    padding-top: 10px;
+    margin-top: auto;
+    padding-top: 20px;
     font-weight: 700;
     font-size: 21px;
   }
 
   &__image {
-    border-radius: 3px;
+    border-radius: 15px;
     width: 100%;
-    height: 100%;
-    align-self: end;
+    height: auto;
+    align-self: center;
+    //border-bottom: solid 2px rgba(0, 0, 0, 0.25);
   }
 
   &__wrapper {
@@ -68,6 +82,93 @@ const openProductPage = (id: number) => {
     gap: 20px 50px;
     background-color: #ffffff;
   }
+}
+
+.card::after {
+  content: "Подробнее";
+  padding-top: 1.25em;
+  text-align: center;
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+  border-radius: 0 12px 12px 12px;
+  font-weight: 700;
+  background-color: #560bad;
+  color: #fff;
+  height: 2.5em;
+  width: 50%;
+  transition: all 0.4s ease-in-out;
+  font-size: 14px;
+  text-transform: uppercase;
+  opacity: 0;
+}
+
+.card:hover::after {
+  bottom: 0;
+  opacity: 1;
+}
+
+.card:hover {
+  -webkit-animation: shadow-drop-2-center 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: shadow-drop-2-center 0.6s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+@-webkit-keyframes shadow-drop-2-center {
+  0% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translateZ(50px);
+    transform: translateZ(50px);
+    -webkit-box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+  }
+}
+@keyframes shadow-drop-2-center {
+  0% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translateZ(50px);
+    transform: translateZ(50px);
+    -webkit-box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@-webkit-keyframes shadow-drop-2-center-out {
+  0% {
+    -webkit-transform: translateZ(50px);
+    transform: translateZ(50px);
+    -webkit-box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+  }
+  100% {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+}
+}
+@keyframes shadow-drop-2-center-out {
+  0% {
+    -webkit-transform: translateZ(50px);
+    transform: translateZ(50px);
+    -webkit-box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+  }
+  100% {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+}
 }
 
 </style>

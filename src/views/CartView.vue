@@ -139,24 +139,35 @@ const allPrice = computed(() => {
   flex-direction: row;
   align-items: center;
   gap: 20px;
-  border: 1px #242424 solid;
+  border: 1px rgba(58, 12, 163, 0.56) solid;
   border-radius: 8px;
   padding: 20px;
   justify-content: space-between;
+  width: 100%;
 
   &__image {
+    width: 7%;
     & img {
       width: 100px;
+      height: auto;
     }
   }
 
   &__right {
     margin-left: auto;
+    width: 30%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     gap: 50px;
+  }
+
+  &__title {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__buttons {
@@ -167,7 +178,8 @@ const allPrice = computed(() => {
   }
 
   &__button {
-    background: bisque;
+    background: rgba(58, 12, 163, 0.56);
+    color: white;
     padding: 15px;
     border-radius: 5px;
     width: 6px;
