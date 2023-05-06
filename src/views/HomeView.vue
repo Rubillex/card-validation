@@ -64,7 +64,7 @@ const openProductPage = (id: number) => {
   &__wrapper {
     display: grid;
     padding: 40px;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px 50px;
     background-color: #ffffff;
   }

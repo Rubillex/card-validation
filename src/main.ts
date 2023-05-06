@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedState from 'pinia-plugin-persistedstate'
+// @ts-ignore
+import VueTheMask from 'vue-the-mask'
 
 import App from './App.vue'
 import router from './router'
@@ -15,5 +17,6 @@ pinia.use(piniaPluginPersistedState);
 
 app.use(pinia);
 app.use(router);
+app.use(VueTheMask);
 
 app.mount('#app');

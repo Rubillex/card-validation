@@ -2,10 +2,10 @@
   <div>
     <div class="header">
       <div class="content">
-        <a class="header__logo-link" @click="goPageMain"> DENTASHOP </a>
+        <a class="header__logo-link" @click="goPageMain"> Диксис </a>
         <div class="header__right">
           <a class="pointer header__cart" @click="goCart">
-            <img alt="cart" src="@/assets/images/cart.svg" />
+            <span>Корзина</span>
             <div class="header__badge" v-if="allCount">{{ allCount }}</div>
           </a>
         </div>

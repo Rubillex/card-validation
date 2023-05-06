@@ -1,26 +1,34 @@
 <template>
   <div class="checkout">
-    <div class="form">
-        <input class="form__input" v-model="surname" placeholder="Фамилия"/>
-        <input class="form__input" v-model="name" placeholder="Имя"/>
-        <input class="form__input" v-model="address" placeholder="Адрес"/>
-        <input class="form__input" v-model="email" placeholder="Email" type="email"/>
-        <div class="form__button" @click="final">Продолжить</div>
-    </div>
+      <template v-if="!showPayCard">
+          <div class="form">
+              <input class="form__input" v-model="surname" placeholder="Фамилия"/>
+              <input class="form__input" v-model="name" placeholder="Имя"/>
+              <input class="form__input" v-model="address" placeholder="Адрес"/>
+              <input class="form__input" v-model="email" placeholder="Email" type="email"/>
+              <div class="form__button" @click="showPayCard = true">Продолжить</div>
+          </div>
+      </template>
+      <template v-else>
+          <CreditCard/>
+      </template>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { cartStore } from "@/stores/cartStore";
-import {useRouter} from "@/use/router";
+import { useRouter } from "@/use/router";
 import axios from 'axios';
+import CreditCard from "@/views/CreditCard.vue";
 
 const { router } = useRouter();
 const name = ref('');
 const surname = ref('');
 const address = ref('');
 const email = ref('');
+
+const showPayCard = ref(true);
 
 const final = () => {
   clearCart();
