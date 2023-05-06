@@ -125,7 +125,7 @@
                     </div>
                 </div>
 
-                <button class="card-form__button">
+                <button class="card-form__button" @click="closePopup">
                     Оплатить
                 </button>
             </div>
@@ -149,6 +149,12 @@ const cardNumberTemp = ref('');
 const isCardFlipped = ref(false);
 const focusElementStyle = ref(false);
 const isInputFocused = ref(false);
+
+const emit = defineEmits(['close']);
+
+const closePopup = () => {
+  emit('close');
+};
 
 onMounted(() => {
     cardNumberTemp.value = otherCardMask.value;
@@ -205,13 +211,6 @@ const flipCard = (status) => {
 
 const focusInput = (e) => {
     isInputFocused.value = true;
-    let targetRef = e.target.dataset.ref;
-    let target = [targetRef].value;
-    focusElementStyle.value = {
-        width: `${target.offsetWidth}px`,
-        height: `${target.offsetHeight}px`,
-        transform: `translateX(${target.offsetLeft}px) translateY(${target.offsetTop}px)`
-    }
 };
 
 const blurInput = () => {

@@ -10,7 +10,7 @@
           </div>
       </template>
       <template v-else>
-          <CreditCard/>
+          <CreditCard @close="final"/>
       </template>
   </div>
 </template>
@@ -33,16 +33,6 @@ const showPayCard = ref(true);
 const final = () => {
   clearCart();
   router.push({ name: 'home' });
-  axios.post('http://localhost:3000/api/export', { data: { name: name.value, surname: surname.value, address: address.value, email: email.value } })
-      .then((response) => {
-        axios.get('http://localhost:3000/api/get')
-            .then((res) => {
-              console.log(res.data.rows);
-            })
-      })
-      .catch((error) => {
-        console.error(error);
-      });
 };
 
 const cartsStore = cartStore();

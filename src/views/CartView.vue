@@ -23,7 +23,7 @@
     </div>
 
     <CommonPopup @close-popup="togglePopup" :is-visible="popupVisible">
-      <CheckoutView />
+      <CheckoutView/>
     </CommonPopup>
   </div>
 </template>
