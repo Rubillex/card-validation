@@ -39,11 +39,10 @@ const openProductPage = (id: number) => {
   padding: 20px;
   width: 100%;
   height: 100%;
-  background: rgba(113, 110, 116, 0.22);
-  border-radius: 16px;
+  background: #fff;
   backdrop-filter: blur(4.6px);
   -webkit-backdrop-filter: blur(4.6px);
-  border: 1px solid rgba(232, 226, 226, 0.12);
+  border: 1px solid rgb(11, 168, 173);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -68,7 +67,6 @@ const openProductPage = (id: number) => {
   }
 
   &__image {
-    border-radius: 15px;
     width: 100%;
     height: auto;
     align-self: center;
@@ -91,9 +89,8 @@ const openProductPage = (id: number) => {
   position: absolute;
   right: 0;
   bottom: -10px;
-  border-radius: 0 12px 12px 12px;
   font-weight: 700;
-  background-color: #560bad;
+  background-color: #0ba8ad;
   color: #fff;
   height: 2.5em;
   width: 50%;

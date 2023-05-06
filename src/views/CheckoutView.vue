@@ -59,8 +59,7 @@ const clearCart = () => {
   box-shadow: 3px 11px 11px 11px rgba(166, 166, 166, 0.12), 0 6px 10px 7px rgba(0, 0, 0, 0.07);
 
   padding: 40px;
-  background: rgba(86, 11, 173, 0.49);
-  border-radius: 20px;
+  background: rgb(11, 168, 173);
 
   &__input {
     max-width: 290px;
@@ -75,7 +74,7 @@ const clearCart = () => {
     box-shadow: 0 10px 20px -18px;
 
     &:focus {
-      border-bottom: 2px solid #560bad;
+      border-bottom: 2px solid #0ba8ad;
       border-radius: 4px 4px 2px 2px;
     }
 
@@ -117,7 +116,7 @@ const clearCart = () => {
     }
 
     &:hover {
-      color: #560bad;
+      color: #0ba8ad;
     }
 
     &:before {

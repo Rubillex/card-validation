@@ -27,7 +27,7 @@ import {productStore} from '@/stores/productStore';
 import {cartStore} from '@/stores/cartStore';
 import {useNumberDelimiter} from "@/use/number";
 
-const {router} = useRouter();
+const { router } = useRouter();
 
 const itemId = computed(() => parseInt(router.currentRoute.value.params.itemId));
 const productsStore = productStore();
@@ -64,7 +64,6 @@ const removeItemFromCart = () => {
   width: 100%;
   height: 100%;
   background: #fff;
-  border-radius: 8px;
   box-sizing: border-box;
   display: grid;
   column-gap: 50px;
@@ -78,8 +77,6 @@ const removeItemFromCart = () => {
     font-weight: 600;
     color: #000;
     font-style: normal;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   &__price {
@@ -92,8 +89,6 @@ const removeItemFromCart = () => {
 
   &__image {
     grid-area: image;
-    border: 3px inset #560bad;
-    border-radius: 20px;
     width: 100%;
     height: auto;
   }
@@ -113,7 +108,7 @@ const removeItemFromCart = () => {
     flex-direction: column;
     align-items: center;
 
-    --color: #560bad;
+    --color: #0ba8ad;
     font-family: inherit;
     max-width: 8em;
     min-width: 2rem;
@@ -155,7 +150,7 @@ const removeItemFromCart = () => {
     }
 
     &:active:before {
-      background: #3a0ca3;
+      background: #0ba8ad;
       transition: background 0s;
     }
   }

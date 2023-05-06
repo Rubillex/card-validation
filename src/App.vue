@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <div class="content">
-        <a class="header__logo-link" @click="goPageMain"> DENTASHOP </a>
+        <a class="header__logo-link" @click="goPageMain"> телефоночная. </a>
         <div class="header__right">
           <a class="pointer header__cart" @click="goCart">
             <img alt="cart" src="@/assets/images/cart.svg" />
@@ -80,7 +80,7 @@ const goCart = () => {
     position: absolute;
     top: 0;
     right: 0;
-    background: #560bad;
+    background: #0ba8ad;
     width: 22px;
     height: 22px;
     font-size: 14px;
@@ -114,5 +114,4 @@ const goCart = () => {
   margin-left: auto;
   margin-right: auto;
 }
-
 </style>

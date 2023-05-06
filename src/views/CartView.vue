@@ -16,10 +16,15 @@
         </div>
       </div>
     </div>
+
     <div class="footer">
       <span class="footer__sum" v-html="'Общая стоимость: ' + allPrice + ' ₽'" />
-      <div class="footer__next" @click="router.push({ name: 'checkout' })">Оформить</div>
+      <div class="footer__next" @click="togglePopup">Оформить</div>
     </div>
+
+    <CommonPopup @close-popup="togglePopup" :is-visible="popupVisible">
+      <CheckoutView />
+    </CommonPopup>
   </div>
 </template>
 
@@ -28,6 +33,8 @@ import { cartStore } from '@/stores/cartStore';
 import { productStore } from "@/stores/productStore";
 import { computed, ref, watch } from "vue";
 import { useRouter } from "@/use/router";
+import CommonPopup from "@/views/CommonPopup.vue";
+import CheckoutView from "@/views/CheckoutView.vue";
 
 const { router } = useRouter();
 
@@ -36,6 +43,12 @@ const store = cartStore();
 const cart = store.getCart;
 
 const productsStore = productStore();
+
+const popupVisible = ref(false);
+
+const togglePopup = () => {
+  popupVisible.value = !popupVisible.value;
+}
 
 if (cart.object.length < 1) {
   router.push({ name: 'home' });
@@ -86,7 +99,7 @@ const allPrice = computed(() => {
     flex-direction: column;
     align-items: center;
 
-    --color: #560bad;
+    --color: #0ba8ad;
     font-family: inherit;
     width: 8em;
     height: 2.6em;
@@ -128,7 +141,7 @@ const allPrice = computed(() => {
     }
 
     &:active:before {
-      background: #3a0ca3;
+      background: #0ba8ad;
       transition: background 0s;
     }
   }
@@ -139,8 +152,7 @@ const allPrice = computed(() => {
   flex-direction: row;
   align-items: center;
   gap: 20px;
-  border: 1px rgba(58, 12, 163, 0.56) solid;
-  border-radius: 8px;
+  border: 1px rgb(11, 168, 173) solid;
   padding: 20px;
   justify-content: space-between;
   width: 100%;
@@ -178,7 +190,7 @@ const allPrice = computed(() => {
   }
 
   &__button {
-    background: rgba(58, 12, 163, 0.56);
+    background: rgb(11, 168, 173);
     color: white;
     padding: 15px;
     border-radius: 5px;
