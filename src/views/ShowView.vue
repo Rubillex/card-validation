@@ -1,32 +1,33 @@
 <template>
   <div>
     <div class="item-block">
-        <img class="untouchable item-block__image" :src="product?.image" alt="image"/>
-        <span class="item-block__name" v-html="product?.name"/>
-        <span class="item-block__price" v-html="convertPrice(product?.price) + ' ₽'"/>
-        <span class="item-block__description" v-html="product?.description"/>
+      <img class="untouchable item-block__image" :src="product?.image" alt="image"/>
+      <span class="item-block__name" v-html="product?.name"/>
+      <span class="item-block__price" v-html="convertPrice(product?.price) + ' ₽'"/>
+      <span class="item-block__description" v-html="product?.description"/>
+      <template v-if="!itemInCart">
+        <span class="item-block__button untouchable" @click="addItemToCart">Купить</span>
+      </template>
+      <template v-else>
+        <div class="item-block__footer">
+          <span class="item-block__button untouchable" @click="removeItemFromCart">-</span>
+          <span class="untouchable">{{ cart.object.find((el) => el.id === product?.id).count }}</span>
+          <span class="item-block__button untouchable" @click="addItemToCart">+</span>
+        </div>
+      </template>
     </div>
-    <template v-if="!itemInCart">
-      <span class="item-block__button" @click="addItemToCart">Купить</span>
-    </template>
-    <template v-else>
-      <div class="item-block__footer">
-        <span class="item-block__button untouchable" @click="removeItemFromCart">-</span>
-        <span class="untouchable">{{ cart.object.find((el) => el.id === product?.id).count }}</span>
-        <span class="item-block__button untouchable" @click="addItemToCart">+</span>
-      </div>
-    </template>
   </div>
 </template>
 
 <script setup lang="ts">
+// todo настроить template vue
 import {useRouter} from '@/use/router';
 import {computed} from 'vue';
 import {productStore} from '@/stores/productStore';
 import {cartStore} from '@/stores/cartStore';
 import {useNumberDelimiter} from "@/use/number";
 
-const {router} = useRouter();
+const { router } = useRouter();
 
 const itemId = computed(() => parseInt(router.currentRoute.value.params.itemId));
 const productsStore = productStore();
@@ -44,15 +45,15 @@ const itemInCart = computed(() => {
 });
 
 const addItemToCart = () => {
-    if (product) {
-        cartsStore.addItemToCart(product);
-    }
+  if (product) {
+    cartsStore.addItemToCart(product);
+  }
 };
 
 const removeItemFromCart = () => {
-    if (product) {
-        cartsStore.removeItemFromCart(product);
-    }
+  if (product) {
+    cartsStore.removeItemFromCart(product);
+  }
 };
 </script>
 
@@ -63,60 +64,56 @@ const removeItemFromCart = () => {
   width: 100%;
   height: 100%;
   background: #fff;
-  border-radius: 8px;
   box-sizing: border-box;
   display: grid;
-  grid-template-areas: "image name" "image price" "image ." "desc desc";
+  column-gap: 50px;
+  row-gap: 30px;
+  grid-template-areas: "image name" "image price" "image desc" "image actions";
 
   &__name {
+    padding-top: 5px;
     grid-area: name;
-    font-size: 21px;
+    font-size: 34px;
     font-weight: 600;
     color: #000;
     font-style: normal;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   &__price {
     grid-area: price;
-    font-size: 21px;
+    font-size: 30px;
     font-weight: 600;
     color: #000;
     font-style: normal;
-    padding-top: 24px;
   }
 
   &__image {
     grid-area: image;
-    border-radius: 3px;
-    width: 60%;
-    margin: 25px auto;
+    width: 100%;
+    height: auto;
   }
 
   &__description {
     grid-area: desc;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 21px;
-    font-weight: 300;
+    line-height: 27px;
+    font-size: 18px;
     color: #000;
     font-style: normal;
   }
 
   &__button {
+    grid-area: actions;
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    --color: #560bad;
+    --color: #0ba8ad;
     font-family: inherit;
     max-width: 8em;
     min-width: 2rem;
     height: 2.6em;
     line-height: 2.5em;
-    margin: 20px;
     position: relative;
     overflow: hidden;
     border: 2px solid var(--color);
@@ -153,17 +150,18 @@ const removeItemFromCart = () => {
     }
 
     &:active:before {
-      background: #3a0ca3;
+      background: #0ba8ad;
       transition: background 0s;
     }
   }
 
   &__footer {
+    grid-area: actions;
     display: flex;
     flex-direction: row;
     gap: 5px;
-
     align-items: center;
   }
+
 }
 </style>

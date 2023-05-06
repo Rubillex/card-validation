@@ -80,7 +80,7 @@ const goCart = () => {
     position: absolute;
     top: 0;
     right: 0;
-    background: #560bad;
+    background: #0ba8ad;
     width: 22px;
     height: 22px;
     font-size: 14px;
@@ -114,5 +114,4 @@ const goCart = () => {
   margin-left: auto;
   margin-right: auto;
 }
-
 </style>
