@@ -1,8 +1,8 @@
 export interface TCart {
-    object: TObject[]
+    object: TCartObject[]
 }
 
-export interface TObject {
+export interface TCartObject {
     id: number,
     count: number
 }
