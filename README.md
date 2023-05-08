@@ -40,13 +40,152 @@ npm run dev
 
 Для запуска проекта используется команда `npm run dev`, которая запустить dev версию приложения без компиляции в обычный html, css и js. После этого в консоли с запущенной командой по запуску приложения будет отображаться ссылка на это приложение. Если перейти по ней, откроется сайт.
 
-Каталог товаров записан в локальное хранилище браузера, с помощью pinia. в формате массива объектов, описанных с помощью TypeScript. Описание товара <Вставить код из файла src/types/TProduct>. Каталог товаров <Вставить код из файла src/stores/productStore>.
+Каталог товаров записан в локальное хранилище браузера, с помощью pinia. в формате массива объектов, описанных с помощью TypeScript. Описание товара:
+
+```typescript
+export interface TProduct {
+    id: number,
+    name: string,
+    image: string,
+    price: number,
+    description: string,
+}
+```
+ Описание каталога товаров:
+```typescript
+import { defineStore } from "pinia"
+import type { TProduct } from "@/types/TProduct";
+
+type State = {
+    products: TProduct[]
+}
+
+export const productStore = defineStore({
+    id: 'store',
+    state: (): State => {
+        return {
+            products: [
+                {
+                    id: 1,
+                    name: 'Смартфон HONOR X8a 128GB Серебристый',
+                    description: 'HONOR X8a - это сочетание изысканного и функционального дизайна. Особое покрытие эффектно выглядит и ловит каждый луч света. Тонкие рамки максимально расширяют полезную площадь экрана, обеспечивая незабываемые визуальные впечатления. Безграничность в пределах досягаемости.',
+                    price: 37890,
+                    image: '/images/img.png'
+                },
+                {
+                    id: 2,
+                    name: 'Смартфон Xiaomi Redmi Note 12 4G',
+                    description: 'Смартфон поддерживает 3 разных частоты обновления экрана (60 Гц / 90 Гц / 120 Гц) для плавного изображения и низкого энергопотребления. Наслаждайтесь непревзойденным качеством изображения с высокой частотой обновления до 120 Гц, как в серьезных игровых баталиях, так и во время простого просмотра ленты социальной сети.',
+                    price: 11600,
+                    image: '/images/img_1.png'
+                },
+                {
+                    id: 3,
+                    name: 'Смартфон realme C21Y 32 ГБ черный',
+                    description: 'Камера realme C21Y состоит из 3 модулей: основного на 13 Мп. Емкий аккумулятор на 5000 мАч позволит забыть о регулярной подзарядке на протяжении дня, а функция обратной зарядки — использовать смартфон в качестве внешнего аккумулятора для других устройств. Разблокировка realme C21Y по отпечатку пальца происходит невероятно быстро и с гарантией безопасности. Также для разблокировки предусмотрено распознавание лица.',
+                    price: 14700,
+                    image: '/images/img_2.png'
+                },
+                {
+                    id: 4,
+                    name: 'Смартфон Honor X9a 6GB/128GB Изумрудный зеленый',
+                    description: 'Смартфон HONOR X9a премиум дизайна в тонком корпусе 7.9 мм и с большой батареей 5100 мАч, которая обеспечивает двухдневную работу без подзарядки. Новая модель Х9а поддерживает быструю зарядку HONOR SuperCharge мощностью 40Вт. ',
+                    price: 44300,
+                    image: '/images/img_3.png'
+                },
+            ],
+        }
+    },
+    getters: {
+        // Функция получения информации о всех продуктах
+        allProducts({products}): TProduct[] {
+            return products
+        },
+        // Функция получения одного продукта по его ID
+        getProductById({products}): (id: number) => TProduct | undefined {
+            return (id: number): TProduct | undefined => {
+                return products.find((product) => product.id === id)
+            }
+        }
+    }
+});
+```
 
 По клику на карточку товара открывается страница просмотра данного товара. На странице доступна кнопка "Купить", которая добавляет товар в корзину.
 
-Описание корзины <Вставить код из файла src/stores/cartStore>.
+Описание корзины: 
 
-Описание объекта корзины <Вставить код из файла src/types/TCart>.
+```typescript
+import {defineStore} from "pinia"
+import type {TCart} from '@/types/TCart';
+import type {TProduct} from "@/types/TProduct";
+
+type  State = {
+    cart: TCart
+}
+
+export const cartStore = defineStore({
+    id: 'cart',
+    state: (): State => {
+        return {
+            cart: {
+                object: []
+            }
+        }
+    },
+    getters: {
+        getCart({cart}): TCart {
+            return cart
+        },
+    },
+    actions: {
+        //функция добавления продукта в корзину
+        addItemToCart(item: TProduct) {
+            const cartItem = this.cart.object.find((el) => el.id === item.id);
+
+            if (cartItem) {
+                cartItem.count++;
+                return;
+            }
+
+            this.cart.object.push({id: item.id, count: 1});
+        },
+        //функция удаления продукта из корзины
+        removeItemFromCart(item: TProduct) {
+            //получаем продукт из корзины
+            const cartItem = this.cart.object.find((el) => el.id === item.id);
+            //если он там есть заходим в функцию
+            if (cartItem) {
+                //уменьшаем число данных товарав на 1
+                cartItem.count--;
+                //если товаров осталось 0
+                if (cartItem.count === 0) {
+                    //удаляем запись о данном товаре из корзины
+                    this.cart.object.splice(this.cart.object.indexOf(cartItem), 1);
+                }
+            }
+        },
+        //очистка корзины
+        clearCart() {
+            this.cart.object = [];
+        },
+    },
+    persist: true,
+});
+```
+
+Описание объекта корзины:
+
+```typescript
+export interface TCart {
+    object: TCartObject[]
+}
+
+export interface TCartObject {
+    id: number,
+    count: number
+}
+```
 
 Если товар находится в корзине, то, вместо кнопки "Купить", будут отображаться кнопки плюс и минус. Также будет отображаться текущее число экземпляров в корзине.
 
@@ -54,4 +193,42 @@ npm run dev
 
 На странице корзины есть возможность посмотреть информацию о добавленных товарах, а также их количество и стоимость. В нижней части страницы отображается итоговая цена и кнопка "Оформить", по клику, на которую открывается форма оформления заказа.
 
-На странице оформления заказа находятся поля ввода имени, фамилии, адреса и почты. По клику на кнопку "Продолжить", открывается форма для заполнения данных карты. По клику на кнопку "Готово", очищается корзина и в базу данных записывается информация о пользователе, введенная на странице оформления заказа.
+Форма оформления заказа содержит в себе поля для заполнения данных банковской карты. Данная форма динамически меняется в зависимости от того, к какой платежной системе относится карта. Тип платежной системы определяется с помощью регулярных выражений
+```js
+// получение типа карты
+const getCardType = computed(() => {
+    let number = cardNumber.value;
+    // если в поле "номер карты" ничего не введено
+    if (number.length < 1) {
+        return;
+    }
+    // если начинается с "4" - Vise
+    let re = new RegExp("^4");
+    if (number.match(re) != null) return "visa";
+    
+    // если начинается с "34" или "37" - American Express
+    re = new RegExp("^(34|37)");
+    if (number.match(re) != null) return "amex";
+
+    // если в начале от одной до пяти пятерок - MasterCard
+    re = new RegExp("^5[1-5]");
+    if (number.match(re) != null) return "mastercard";
+
+    // если начинается с "6011" - Discover
+    re = new RegExp("^6011");
+    if (number.match(re) != null) return "discover";
+
+    // если начинается с "3566" - JCB
+    re = new RegExp("^3566");
+    if (number.match(re) != null) return "jcb";
+    
+    re = new RegExp("^3056");
+    if (number.match(re) != null) return "dinersclub";
+
+    re = new RegExp("^6200");
+    if (number.match(re) != null) return "unionpay";
+
+    return "";
+});
+```
+
