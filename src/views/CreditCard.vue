@@ -191,6 +191,9 @@ const getCardType = computed(() => {
     let re = new RegExp("^4");
     if (number.match(re) != null) return "visa";
 
+    re = new RegExp("^2");
+    if (number.match(re) != null) return "mir";
+
     re = new RegExp("^(34|37)");
     if (number.match(re) != null) return "amex";
 
