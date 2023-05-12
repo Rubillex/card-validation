@@ -122,7 +122,6 @@ const allPrice = computed(() => {
   flex-direction: row;
   align-items: center;
   gap: 20px;
-  border: 1px rgb(11, 168, 173) solid;
   padding: 20px;
   justify-content: space-between;
   width: 100%;

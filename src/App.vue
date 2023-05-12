@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header">
-      <div class="content">
+      <div class="content header-content">
         <a class="header__logo-link" @click="goPageMain"> Диксис </a>
         <div class="header__right">
           <a class="pointer header__cart" @click="goCart">
@@ -49,10 +49,17 @@ const goCart = () => {
 
 <style scoped lang="scss">
 
+.header-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+}
+
 .header {
   width: 100vw;
   overflow: hidden;
-  background-color: #f1f1f1;
+  background-color: rgb(82, 196, 148);
   padding: 10px 5px;
   margin-bottom: 50px;
   box-shadow: 3px 11px 11px 11px rgba(166, 166, 166, 0.12), 0 6px 10px 7px rgba(0, 0, 0, 0.07);
@@ -104,7 +111,7 @@ const goCart = () => {
   border-radius: 4px;
 
   &:hover {
-    background-color: #ddd;
+    background-color: rgba(221, 221, 221, 0.47);
     color: black;
   }
 }
