@@ -18,8 +18,7 @@
     </div>
 
     <div class="footer">
-      <span class="footer__sum" v-html="'Общая стоимость: ' + allPrice + ' ₽'" />
-      <div class="footer__next" @click="togglePopup">Оформить</div>
+      <div class="footer__next" @click="togglePopup">Оформить за {{ allPrice + ' ₽' }}</div>
     </div>
 
     <CommonPopup @close-popup="togglePopup" :is-visible="popupVisible">
@@ -87,7 +86,7 @@ const allPrice = computed(() => {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   &__sum {
     font-weight: 700;
@@ -101,7 +100,6 @@ const allPrice = computed(() => {
 
     --color: #0ba8ad;
     font-family: inherit;
-    width: 8em;
     height: 2.6em;
     line-height: 2.5em;
     margin: 20px;
@@ -114,36 +112,8 @@ const allPrice = computed(() => {
     border-radius: 6px;
     font-weight: 500;
     color: var(--color);
-
-    &:before {
-      content: "";
-      position: absolute;
-      z-index: -1;
-      background: var(--color);
-      height: 150px;
-      width: 200px;
-      border-radius: 50%;
-    }
-
-    &:hover {
-      color: #fff;
-    }
-
-    &:before {
-      top: 100%;
-      left: 100%;
-      transition: all .7s;
-    }
-
-    &:hover:before {
-      top: -30px;
-      left: -30px;
-    }
-
-    &:active:before {
-      background: #0ba8ad;
-      transition: background 0s;
-    }
+    width: fit-content;
+    padding: 0 5px;
   }
 }
 
@@ -158,9 +128,9 @@ const allPrice = computed(() => {
   width: 100%;
 
   &__image {
-    width: 7%;
+    width: 15%;
     & img {
-      width: 100px;
+      width: 200px;
       height: auto;
     }
   }
