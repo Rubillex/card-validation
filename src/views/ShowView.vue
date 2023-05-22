@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="item-block">
-      <img class="untouchable item-block__image" :src="product?.image" alt="image"/>
-      <span class="item-block__name" v-html="product?.name"/>
-      <span class="item-block__price" v-html="convertPrice(product?.price) + ' ₽'"/>
-      <span class="item-block__description" v-html="product?.description"/>
+    <div v-if="product" class="item-block">
+      <img class="untouchable item-block__image" :src="product.image" alt="image"/>
+      <span class="item-block__name" v-html="product.name"/>
+      <span class="item-block__price" v-html="convertPrice(product.price) + ' ₽'"/>
+      <span class="item-block__description" v-html="product.description"/>
       <template v-if="!itemInCart">
         <span class="item-block__button untouchable" @click="addItemToCart">Купить</span>
       </template>
