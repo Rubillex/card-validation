@@ -11,7 +11,7 @@
       <template v-else>
         <div class="item-block__footer">
           <span class="item-block__button untouchable" @click="removeItemFromCart">-</span>
-          <span class="untouchable">{{ cart.object.find((el) => el.id === product?.id).count }}</span>
+          <span class="untouchable">{{ productsCount }}</span>
           <span class="item-block__button untouchable" @click="addItemToCart">+</span>
         </div>
       </template>
@@ -26,6 +26,7 @@ import {computed} from 'vue';
 import {productStore} from '@/stores/productStore';
 import {cartStore} from '@/stores/cartStore';
 import {useNumberDelimiter} from "@/use/number";
+import type {TCartObject} from "@/types/TCart";
 
 const { router } = useRouter();
 
@@ -43,6 +44,21 @@ const convertPrice = (price: number) => useNumberDelimiter(price);
 const itemInCart = computed(() => {
   return !!cart.object.find((el) => el.id === product?.id);
 });
+
+const productsCount = () => {
+    if (!product && cart.object.length < 1) {
+        return 0;
+    }
+
+    let object: TCartObject | undefined;
+    object = cart.object.find(({id}) => id === product?.id);
+
+    if (object == undefined) {
+        return 0;
+    }
+
+    return object.count;
+};
 
 const addItemToCart = () => {
   if (product) {
