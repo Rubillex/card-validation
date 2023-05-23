@@ -11,7 +11,7 @@
       <template v-else>
         <div class="item-block__footer">
           <span class="item-block__button untouchable" @click="removeItemFromCart">-</span>
-          <span class="untouchable">{{ productsCount }}</span>
+          <span class="untouchable">{{ productsCount() }}</span>
           <span class="item-block__button untouchable" @click="addItemToCart">+</span>
         </div>
       </template>
