@@ -170,14 +170,7 @@ const closePopup = () => {
         return;
     }
 
-    const baseUrl = 'https://rubillex.server.paykeeper.ru';
-    const base64 = window.btoa('admin:c4ff0eb3d095');
-
-    axios.get(`${baseUrl}/info/settings/token/`, { headers: {Authorization: `Basic ${base64}`, 'Access-Control-Allow-Origin': '*'} })
-        .then((res) => {
-            console.log(res);
-        });
-    // emit('close');
+    emit('close');
 };
 
 watch(error, () => {
