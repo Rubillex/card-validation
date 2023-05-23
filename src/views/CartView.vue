@@ -47,7 +47,7 @@ const productsStore = productStore();
 const popupVisible = ref(false);
 
 const togglePopup = () => {
-    const baseUrl = 'https://rubillex.server.paykeeper.ru';
+    const baseUrl = 'https://rubillex.paykeeper.ru';
     const base64 = window.btoa('admin:c4ff0eb3d095');
 
     axios.get(`${baseUrl}/info/settings/token/`, {
