@@ -135,6 +135,7 @@
 
 <script setup>
 import {computed, onMounted, ref, watch} from "vue";
+import axios from "axios";
 
 const currentCardBackground = ref(Math.floor(Math.random()* 25 + 1));
 const cardName = ref('');
@@ -169,7 +170,14 @@ const closePopup = () => {
         return;
     }
 
-  emit('close');
+    const baseUrl = 'https://rubillex.server.paykeeper.ru/';
+    const base64 = window.btoa('admin:c4ff0eb3d095');
+
+    axios.get(`${baseUrl}/info/settings/token/`, { headers: {Authorization: `Basic ${base64}`} })
+        .then((res) => {
+            console.log(res);
+        });
+    // emit('close');
 };
 
 watch(error, () => {
