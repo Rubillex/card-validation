@@ -45,7 +45,7 @@ const itemInCart = computed(() => {
   return !!cart.object.find((el) => el.id === product?.id);
 });
 
-const productsCount = () => {
+const productsCount = computed(() => {
     if (!product && cart.object.length < 1) {
         return 0;
     }
@@ -58,7 +58,7 @@ const productsCount = () => {
     }
 
     return object.count;
-};
+});
 
 const addItemToCart = () => {
   if (product) {
