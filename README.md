@@ -236,3 +236,62 @@ const getCardType = computed(() => {
 });
 ```
 
+# Описание платежки
+
+В качестве платежной системы был использован сервис "paykeeper". Подключение было произведено с помощью API запросов. Чтобы получить ссылку для оплаты, требуется выполнить следующий скрипт:
+
+```javascript
+const baseUrl = 'https://rubillex.paykeeper.ru';
+const base64 = window.btoa('login:password');
+
+//считаем стоимость корзины
+const allPrice = computed(() => {
+    let sum = 0;
+    cart.object.forEach((el) => sum += (productsStore.getProductById(el.id).price) * el.count);
+
+    return sum;
+});
+
+let token = null;
+
+// запрос на получение токена
+axios.get(`${baseUrl}/info/settings/token/`, {
+    headers: {
+        Authorization: `Basic ${base64}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+}).then((res) => {
+    token = res.token;
+});
+
+//платежные данные
+const paymentData = {
+    pay_amount: allPrice,
+    clientid: fullName,
+    //Генерируем случайный ID заказа на основе текущего времени
+    orderid: Date.now(),
+    client_email: email,
+    service_name: 'Товар',
+    token
+};
+
+// посылаем запрос на получение ссылки для оплаты
+axios.post(`${baseUrl}/change/invoice/preview/`, paymentData, {
+    headers: {
+        Authorization: `Basic ${base64}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }
+}).then((res) => {
+    window.open(res.invoice_url, '_blank');
+});
+```
+
+После этого мы попадаем на страницу оплаты. В нашем случае используется тестовый шлюз, следовательно и оплата производится с тестовых карт.
+
+![alt text for screen readers](./public/test.png)
+
+После успешной оплаты мы видим следующее:
+
+![alt text for screen readers](./public/test_2.png)
+
+По нажатии на "Вернуться на сайт" пользователь попадает на главную страницу сайта.
