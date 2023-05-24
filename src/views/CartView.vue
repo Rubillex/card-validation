@@ -47,8 +47,10 @@ const productsStore = productStore();
 const popupVisible = ref(false);
 
 const togglePopup = () => {
-    const baseUrl = 'https://rubillex.paykeeper.ru';
-    const base64 = window.btoa('admin:c4ff0eb3d095');
+    const baseUrl = 'https://rubillex.server.paykeeper.ru';
+    const base64 = 'cnViaWxsZXg6UnViIWxsZXgyMjg=';
+
+    let token = null;
 
     axios.get(`${baseUrl}/info/settings/token/`, {
         headers: {
@@ -58,10 +60,29 @@ const togglePopup = () => {
         }
     })
         .then((res) => {
-            console.log(res);
+            token = res.token;
         });
-  // popupVisible.value = !popupVisible.value;
+
+
+    const paymentData = {
+        pay_amount: allPrice.value,
+        service_name: 'Товар',
+        token: token,
+    };
+
+    axios.post(`${baseUrl}/change/invoice/preview/`, paymentData, {
+        headers: {
+            Authorization: `Basic ${base64}`,
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    }).then((res) => {
+        window.open(res.invoice_url, '_blank');
+    });
+
+    // popupVisible.value = !popupVisible.value;
 };
+
 
 if (cart.object.length < 1) {
   router.push({ name: 'home' });
