@@ -241,7 +241,7 @@ const getCardType = computed(() => {
 В качестве платежной системы был использован сервис "paykeeper". Подключение было произведено с помощью API запросов. Чтобы получить ссылку для оплаты, требуется выполнить следующий скрипт:
 
 ```javascript
-const baseUrl = 'https://rubillex.paykeeper.ru';
+const baseUrl = 'https://rubillex.server.paykeeper.ru';
 const base64 = window.btoa('login:password');
 
 //считаем стоимость корзины
