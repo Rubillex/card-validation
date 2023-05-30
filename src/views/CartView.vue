@@ -46,41 +46,26 @@ const productsStore = productStore();
 
 const popupVisible = ref(false);
 
-const togglePopup = () => {
-    const baseUrl = 'https://rubillex.server.paykeeper.ru';
-    const base64 = 'cnViaWxsZXg6UnViIWxsZXgyMjg=';
+const togglePopup = async () => {
 
-    let token = null;
 
-    axios.get(`${baseUrl}/info/settings/token/`, {
-        headers: {
-            Authorization: `Basic ${base64}`,
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    })
+    axios.get('https://rubillex.ru:3456/pay')
         .then((res) => {
-            token = res.token;
+            const token = res.data.token;
+
+            const paymentData = {
+                token,
+                service_name: 'Товар',
+                pay_amount: allPrice.value,
+            };
+
+            axios.post('https://rubillex.ru:3456/invoice', paymentData)
+                .then((res) => {
+                    if (res.data.result !== 'fail') {
+                        window.open(res.data.invoice_url, '_blank');
+                    }
+                });
         });
-
-
-    const paymentData = {
-        pay_amount: allPrice.value,
-        service_name: 'Товар',
-        token: token,
-    };
-
-    axios.post(`${baseUrl}/change/invoice/preview/`, paymentData, {
-        headers: {
-            Authorization: `Basic ${base64}`,
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    }).then((res) => {
-        window.open(res.invoice_url, '_blank');
-    });
-
-    // popupVisible.value = !popupVisible.value;
 };
 
 
