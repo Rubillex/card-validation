@@ -63,6 +63,7 @@ const togglePopup = async () => {
                 .then((res) => {
                     if (res.data.result !== 'fail') {
                         window.open(res.data.invoice_url, '_blank');
+                        store.clearCart();
                     }
                 });
         });
