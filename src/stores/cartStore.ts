@@ -47,6 +47,12 @@ export const cartStore = defineStore({
                 }
             }
         },
+        removeAllItemFromCart(item: TProduct) {
+            const cartItem = this.cart.object.find((el) => el.id === item.id);
+            if (cartItem) {
+                this.cart.object.splice(this.cart.object.indexOf(cartItem), 1);
+            }
+        },
         //очистка корзины
         clearCart() {
             this.cart.object = [];

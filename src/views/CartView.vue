@@ -11,6 +11,7 @@
             <div class="cart-element__button untouchable" @click="removeItemFromCart(productsStore.getProductById(item.id))">-</div>
             <div class="cart-element__count">{{ item.count }}</div>
             <div class="cart-element__button untouchable" @click="addItemToCart(productsStore.getProductById(item.id))">+</div>
+            <div class="cart-element__button cart-element__button--remove untouchable" @click="removeAllItemFromCart(productsStore.getProductById(item.id))">удалить</div>
           </div>
           <div class="cart-element__price">{{ productsStore.getProductById(item.id).price * item.count + ' ₽' }}</div>
         </div>
@@ -86,6 +87,10 @@ const addItemToCart = (product) => {
 
 const removeItemFromCart = (product) => {
   store.removeItemFromCart(product);
+};
+
+const removeAllItemFromCart = (product) => {
+    store.removeAllItemFromCart(product);
 };
 
 const allPrice = computed(() => {
@@ -193,6 +198,10 @@ const allPrice = computed(() => {
     justify-content: center;
 
     cursor: pointer;
+
+    &--remove {
+      width: fit-content;
+    }
   }
 }
 </style>
