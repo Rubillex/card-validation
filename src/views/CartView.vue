@@ -162,7 +162,7 @@ const allPrice = computed(() => {
 
   &__right {
     margin-left: auto;
-    width: 30%;
+    width: 50%;
     display: flex;
     flex-direction: row;
     align-items: center;
