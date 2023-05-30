@@ -63,7 +63,7 @@ const togglePopup = async () => {
             axios.post('http://localhost:3456/invoice', paymentData)
                 .then((res) => {
                     if (res.data.result !== 'fail') {
-                        window.open(res.data.invoice_url);
+                        window.open(res.data.invoice_url, '_self');
                         store.clearCart();
                     }
                 });
