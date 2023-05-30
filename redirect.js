@@ -42,14 +42,21 @@ app.get('/pay', async (_req, res) => {
 
 app.post('/invoice', async (_req, res) => {
     try {
-        console.log(JSON.stringify(_req.body));
+        var formBody = [];
+        Object.keys(_req.body).forEach((key) => {
+            var encodedKey = encodeURIComponent(key);
+            var encodedValue = encodeURIComponent(_req.body[key]);
+            formBody.push(encodedKey + "=" + encodedValue);
+        });
+        formBody = formBody.join("&");
+
         const response = await fetch(`${baseUrl}/change/invoice/preview/`, {
             method: 'POST',
+            body: formBody,
             headers: {
                 Authorization: `Basic ${base64}`,
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: JSON.stringify(_req.body)
         });
 
         if (!response.ok) {
