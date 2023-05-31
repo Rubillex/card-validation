@@ -50,7 +50,7 @@ const popupVisible = ref(false);
 const togglePopup = async () => {
 
 
-    axios.get('http://95.163.237.54:3457/pay')
+    axios.get('http://95.163.237.54:3456/pay')
         .then((res) => {
             const token = res.data.token;
 
@@ -60,7 +60,7 @@ const togglePopup = async () => {
                 pay_amount: allPrice.value,
             };
 
-            axios.post('http://95.163.237.54:3457/invoice', paymentData)
+            axios.post('http://95.163.237.54:3456/invoice', paymentData)
                 .then((res) => {
                     if (res.data.result !== 'fail') {
                         window.open(res.data.invoice_url, '_self');
