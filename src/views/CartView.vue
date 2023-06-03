@@ -19,7 +19,13 @@
     </div>
 
     <div class="footer">
-      <div class="footer__next" @click="togglePopup">Оформить за {{ allPrice + ' ₽' }}</div>
+        <form method='POST' action='https://rubillex.server.paykeeper.ru/create/' >
+            Введите сумму оплаты:
+            <input type='text' v-show="false" name='sum' :value="allPrice"/> <br />
+            <input type='text' v-show="false" name='orderid' :value="Date.now()"/> <br />
+            <input type='text' v-show="false" name='service_name' value='Тестовая оплата'/> <br />
+            <input type='submit' :value="`Оформить за ${allPrice} ₽`" @click="togglePopup" class="footer__next" />
+        </form>
     </div>
 
     <CommonPopup @close-popup="togglePopup" :is-visible="popupVisible">
@@ -48,26 +54,25 @@ const productsStore = productStore();
 const popupVisible = ref(false);
 
 const togglePopup = async () => {
-
-
-    axios.get('http://127.0.0.1:3456/pay')
-        .then((res) => {
-            const token = res.data.token;
-
-            const paymentData = {
-                token,
-                service_name: 'Товар',
-                pay_amount: allPrice.value,
-            };
-
-            axios.post('http://127.0.0.1:3456/invoice', paymentData)
-                .then((res) => {
-                    if (res.data.result !== 'fail') {
-                        window.open(res.data.invoice_url, '_self');
-                        store.clearCart();
-                    }
-                });
-        });
+    store.clearCart();
+    // axios.get('http://127.0.0.1:3456/pay')
+    //     .then((res) => {
+    //         const token = res.data.token;
+    //
+    //         const paymentData = {
+    //             token,
+    //             service_name: 'Товар',
+    //             pay_amount: allPrice.value,
+    //         };
+    //
+    //         axios.post('http://127.0.0.1:3456/invoice', paymentData)
+    //             .then((res) => {
+    //                 if (res.data.result !== 'fail') {
+    //                     window.open(res.data.invoice_url, '_self');
+    //                     store.clearCart();
+    //                 }
+    //             });
+    //     });
 };
 
 
