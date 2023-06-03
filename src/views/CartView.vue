@@ -21,10 +21,10 @@
     <div class="footer">
         <form method='POST' action='https://rubillex.server.paykeeper.ru/create/' >
             Введите сумму оплаты:
-            <input type='text' v-show="false" name='sum' :value="allPrice"/> <br />
+            <input type='text' v-show="false" name='sum' :value="allPrice > 0 ? allPrice : tempPrice"/> <br />
             <input type='text' v-show="false" name='orderid' :value="Date.now()"/> <br />
             <input type='text' v-show="false" name='service_name' value='Тестовая оплата'/> <br />
-            <input type='submit' :value="`Оформить за ${allPrice} ₽`" @click="togglePopup" class="footer__next" />
+            <input type='submit' :value="`Оформить за ${allPrice > 0 ? allPrice : tempPrice} ₽`" @click="togglePopup" class="footer__next" />
         </form>
     </div>
 
@@ -53,8 +53,11 @@ const productsStore = productStore();
 
 const popupVisible = ref(false);
 
+let tempPrice = null;
+
 const togglePopup = async () => {
-    setTimeout(() => store.clearCart(), 5000);
+    tempPrice = allPrice.value;
+    store.clearCart();
     // axios.get('http://127.0.0.1:3456/pay')
     //     .then((res) => {
     //         const token = res.data.token;
@@ -145,6 +148,7 @@ const allPrice = computed(() => {
     color: var(--color);
     width: fit-content;
     padding: 0 5px;
+    background: white;
   }
 }
 
