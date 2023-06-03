@@ -54,7 +54,7 @@ const productsStore = productStore();
 const popupVisible = ref(false);
 
 const togglePopup = async () => {
-    store.clearCart();
+    setTimeout(() => store.clearCart(), 5000);
     // axios.get('http://127.0.0.1:3456/pay')
     //     .then((res) => {
     //         const token = res.data.token;
